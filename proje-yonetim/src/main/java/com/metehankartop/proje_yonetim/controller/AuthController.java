@@ -100,12 +100,11 @@ public class AuthController {
                         .body(Map.of("error", "Bu email zaten kullanımda"));
             }
 
-            // Şifreyi encode et
+
             employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             Employee savedEmployee = employeeRepository.save(employee);
             System.out.println("Employee saved successfully with ID: " + savedEmployee.getId());
 
-            // Şifreyi response'da göndermemek için null yapıyoruz
             savedEmployee.setPassword(null);
 
             return ResponseEntity.ok(savedEmployee);

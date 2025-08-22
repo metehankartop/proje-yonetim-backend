@@ -32,14 +32,12 @@ public class JwtFilter implements Filter {
 
         System.out.println("JwtFilter - İstek: " + method + " " + path);
 
-        // CORS preflight requests için OPTIONS metodunu handle et
         if ("OPTIONS".equals(method)) {
             res.setStatus(HttpServletResponse.SC_OK);
             chain.doFilter(request, response);
             return;
         }
 
-        // Auth istekleri filtreyi atlasın
         if (path.startsWith("/api/auth/")) {
             System.out.println("Auth endpoint, filter atlanıyor");
             chain.doFilter(request, response);

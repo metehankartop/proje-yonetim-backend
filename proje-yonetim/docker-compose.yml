@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Backend servisi
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=springuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+    depends_on:
+      - db
+  # PostgreSQL veritabanı
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=springuser
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # Frontend servisi
+  frontend:
+    build: "C:/Users/meteh/OneDrive/Masaüstü/proje-yonetim/proje-yonetim"
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  postgres-data:
